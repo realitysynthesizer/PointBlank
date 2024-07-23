@@ -39,7 +39,6 @@ public class movements : MonoBehaviour
         
         inputasset = new TemporalOdyssey();
         inputasset.Player.Enable();
-        animator = GetComponent<Animator>();
        
         screenspacecentre = new Vector3(Screen.width / 2, Screen.height / 2, 0);
 
@@ -56,7 +55,9 @@ public class movements : MonoBehaviour
     {
         gamemanager = GameObject.Find("gamemanager").GetComponent<gamemanager>();
         cam = Camera.main;
-        
+        animator = GetComponent<Animator>();
+
+
 
 
     }

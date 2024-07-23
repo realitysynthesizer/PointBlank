@@ -26,6 +26,7 @@ public class enemygun : gun
         enemytransform = gameObject.GetComponentInParent<Transform>();
         enemyAI = gameObject.GetComponentInParent<EnemyAI>();
         bloodimpact = gun.bloodimpact;
+        hitimpact = gun.hitimpact;
 
 
 

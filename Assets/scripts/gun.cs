@@ -23,6 +23,7 @@ public class gun : MonoBehaviour
     public TemporalOdyssey inputasset;
     public gamemanager gamemanager;
     public GameObject bloodimpact;
+    public GameObject hitimpact;
 
 
 
@@ -92,11 +93,24 @@ public class gun : MonoBehaviour
         if (Physics.Raycast(tip.transform.position, tip.transform.forward, out RaycastHit hit, 100f))
         {
             
+            if (hit.collider.gameObject.tag == "Enemy" || hit.collider.gameObject.tag == "Player")
+            {
+                Instantiate(bloodimpact, hit.point, Quaternion.LookRotation(hit.normal));
+
+
+            }
+            else
+            {
+                GameObject impactinstance = Instantiate(hitimpact, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(impactinstance, 20f);
+            }
+
+            
+
             Health health = hit.collider.gameObject.GetComponent<Health>();
             if (health != null)
             {
                 health.TakeDamage(5);
-                Instantiate(bloodimpact, hit.point, Quaternion.LookRotation(hit.normal));
 
             }
             
