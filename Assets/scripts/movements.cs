@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 
@@ -20,20 +21,7 @@ public class movements : MonoBehaviour
     public Vector3 dist_cam_player;
     public Vector3 mousepos;
     public gamemanager gamemanager;
-    
-    
-    
-    
-
-    
-
-
-
-
-
-
-
-
+ 
     private void Awake()
     {
         
@@ -41,13 +29,6 @@ public class movements : MonoBehaviour
         inputasset.Player.Enable();
        
         screenspacecentre = new Vector3(Screen.width / 2, Screen.height / 2, 0);
-
-
-
-
-
-        
-
 
     }
     // Start is called before the first frame update
@@ -59,14 +40,27 @@ public class movements : MonoBehaviour
         speedincrement = 1.5f;
         playershooting = GetComponent<PlayerShooting>();
 
+        inputasset.Player.sprint.started += ctx =>
 
+        {
+            movementsensitivity *= speedincrement;
+            animator.SetFloat("movementspeedmultiplier", speedincrement);
+        };
+
+
+
+        inputasset.Player.sprint.canceled += ctx =>
+        {
+            movementsensitivity /= speedincrement;
+            animator.SetFloat("movementspeedmultiplier", 1);
+        };
 
 
     }
 
     private void Update()
     {
-
+        
         Vector2 move = inputasset.Player.Move.ReadValue<Vector2>();
         if (move.magnitude != 0)
         {
@@ -94,14 +88,11 @@ public class movements : MonoBehaviour
 
             transform.position += new Vector3(move.x * Time.deltaTime * movementsensitivity, 0, move.y * Time.deltaTime * movementsensitivity);
 
-
         }
         else
         {
             animator.SetInteger("state", 0);
         }
-
-
 
         if (playershooting.currentAmmo > 0)
         {
@@ -114,11 +105,15 @@ public class movements : MonoBehaviour
             }
 
 
-
-            inputasset.Player.Fire.canceled += ctx =>
+            if (inputasset.Player.Fire.ReadValue<float>()==0)
             {
-                animator.SetInteger("fire", 0);
-            };
+                if (animator.GetInteger("fire") == 1)
+                {
+                    animator.SetInteger("fire", 0);
+
+                }
+            }
+        
         }
         else
         {
@@ -129,40 +124,16 @@ public class movements : MonoBehaviour
             }
         }
 
-
-            inputasset.Player.sprint.started += ctx =>
-
-        {
-            movementsensitivity *= speedincrement;
-            animator.SetFloat("movementspeedmultiplier", speedincrement);
-        };
-
-        inputasset.Player.sprint.canceled += ctx =>
-        {
-            movementsensitivity /= speedincrement;
-            animator.SetFloat("movementspeedmultiplier", 1);
-        };
-
+        
         
 
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void OnDisable()
     {
-
-        
-
-        
-
-
-
+        inputasset.Player.Disable();
 
     }
-
-    
-
-
 
 
 

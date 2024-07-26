@@ -64,7 +64,7 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f; // Reset time scale before quitting
 
-        SceneManager.LoadScene("MainMenu"); // Assumes you have a scene named "MainMenu"
+        SceneManager.LoadScene("mainmenu"); // Assumes you have a scene named "MainMenu"
     }
 
     void RestartLevel()

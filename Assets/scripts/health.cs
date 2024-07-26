@@ -40,7 +40,13 @@ public class Health : MonoBehaviour
             animator.SetTrigger("Destroy");
         }*/
         // Add a delay to allow the animation to play before destroying the object
-        Destroy(gameObject); // Adjust the delay based on the length of your animation
+        Destroy(gameObject);
+        if (gameObject.CompareTag("Player"))
+        {
+            GameData.LastScene = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene("gameover");
+        }
+        
         
     }
 

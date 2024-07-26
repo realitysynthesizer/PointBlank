@@ -1979,7 +1979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c007474b54fcb6b48a0da0ccd96d98a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  maxHealth: 500
   deatheffect: {fileID: 1005249724684624, guid: de083752034212e47a6e151c88de37e5,
     type: 3}
 --- !u!114 &746093589
