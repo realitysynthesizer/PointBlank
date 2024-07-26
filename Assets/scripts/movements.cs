@@ -11,8 +11,8 @@ public class movements : MonoBehaviour
     public Camera cam;
     public Animator animator;
     public GameObject bullet;
-    
-    
+    public PlayerShooting playershooting;
+    public float speedincrement;
     
     public Vector3 centre;
     public Vector3 screenspacecentre;
@@ -56,6 +56,8 @@ public class movements : MonoBehaviour
         gamemanager = GameObject.Find("gamemanager").GetComponent<gamemanager>();
         cam = Camera.main;
         animator = GetComponent<Animator>();
+        speedincrement = 1.5f;
+        playershooting = GetComponent<PlayerShooting>();
 
 
 
@@ -101,30 +103,44 @@ public class movements : MonoBehaviour
 
 
 
-        inputasset.Player.Fire.started += ctx =>
+        if (playershooting.currentAmmo > 0)
         {
-            animator.SetInteger("fire", 1);
+            
 
-        };
+            if (inputasset.Player.Fire.triggered)
+            {
+                animator.SetInteger("fire", 1);
+                
+            }
 
 
 
-        inputasset.Player.Fire.canceled += ctx =>
+            inputasset.Player.Fire.canceled += ctx =>
+            {
+                animator.SetInteger("fire", 0);
+            };
+        }
+        else
         {
-            animator.SetInteger("fire", 0);
-        };
+            if (inputasset.Player.Fire.triggered)
+            {
+                playershooting.emptyshotsound.Play();
 
-        inputasset.Player.sprint.started += ctx =>
+            }
+        }
+
+
+            inputasset.Player.sprint.started += ctx =>
 
         {
-            movementsensitivity *= 1.5f;
-            animator.speed = 1.5f;
+            movementsensitivity *= speedincrement;
+            animator.SetFloat("movementspeedmultiplier", speedincrement);
         };
 
         inputasset.Player.sprint.canceled += ctx =>
         {
-            movementsensitivity /= 1.5f;
-            animator.speed = 1;
+            movementsensitivity /= speedincrement;
+            animator.SetFloat("movementspeedmultiplier", 1);
         };
 
         

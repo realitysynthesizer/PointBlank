@@ -74,14 +74,14 @@ public class gun : MonoBehaviour
         crosshairrect.position = cam.WorldToScreenPoint(hitpoint);
         
 
-        if (inputasset.Player.Fire.inProgress)
+        /*if (inputasset.Player.Fire.inProgress)
         {
             if (Time.time > canfire)
             {
                 shoot();
                 canfire = Time.time + firedelay;
             }
-        }
+        }*/
 
     }
 
@@ -102,7 +102,7 @@ public class gun : MonoBehaviour
             else
             {
                 GameObject impactinstance = Instantiate(hitimpact, hit.point, Quaternion.LookRotation(hit.normal));
-                Destroy(impactinstance, 20f);
+                Destroy(impactinstance, 10f);
             }
 
             
