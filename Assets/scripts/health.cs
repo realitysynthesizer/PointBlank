@@ -1,4 +1,5 @@
-using UnityEditor.SearchService;
+using System.Collections;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,7 +17,14 @@ public class Health : MonoBehaviour
         animator = GetComponent<Animator>();
 
     }
-    
+
+    private void Update()
+    {
+        if (gameObject == null)
+        {
+            return;
+        }
+    }
     public void TakeDamage(int damage)
     {
         if (isDying) return;
@@ -43,11 +51,17 @@ public class Health : MonoBehaviour
         Destroy(gameObject);
         if (gameObject.CompareTag("Player"))
         {
+
+            
             GameData.LastScene = SceneManager.GetActiveScene().name;
-            SceneManager.LoadScene("gameover");
+            //StartCoroutine(GameOver());
+
+
+
+
         }
-        
-        
+
+
     }
 
     public int GetCurrentHealth()
@@ -58,5 +72,10 @@ public class Health : MonoBehaviour
     public int GetMaxHealth()
     {
         return maxHealth;
+    }
+
+    public void AddHealth(int amount)
+    {
+        currentHealth += amount;
     }
 }

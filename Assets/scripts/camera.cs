@@ -25,6 +25,11 @@ public class CameraFollow : MonoBehaviour
 
     private void Update()
     {
+        if (player == null)
+        {
+            return;
+        }
+
         cam_initialpos = new Vector3(player.transform.position.x + dist_cam_player.x, cam_initialpos.y, player.transform.position.z + dist_cam_player.z);
 
 

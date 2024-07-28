@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37f7eead0d08a5b40aef84c37308fb2d, type: 3}
+  m_Name: Weapon1
+  m_EditorClassIdentifier: 
+  weaponName: Assault Rifle
+  maxAmmo: 30
+  currentAmmo: 30
+  maxReserveAmmo: 90
+  reserveAmmo: 0
+  reloadTime: 2
+  fireRate: 0.1
+  reloadSound: {fileID: 8300000, guid: aafd95c7ab7e7bc4e9213e2c24789430, type: 3}
+  muzzleFlash: {fileID: 1336949550903370, guid: a90b9acd59aea244ca9190160b28ec16,
+    type: 3}
+  hitImpact: {fileID: 108086, guid: 547c2e12da8d4214098216299e70a3ba, type: 3}
+  bloodImpact: {fileID: 1773671868869290, guid: e0298324f8ab00c4cb6b8717a701e1d2,
+    type: 3}
+  shotclip: {fileID: 8300000, guid: 76c1bd0222532704daa98eb7d5ae19e2, type: 3}
+  tip: {fileID: 0}

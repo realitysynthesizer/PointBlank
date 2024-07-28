@@ -39,7 +39,10 @@ public class enemygun : gun
     // Update is called once per frame
     void Update()
     {
-        
+        if (player == null)
+        {
+            return;
+        }
 
         dist_enemy_player = Vector3.Distance(player.transform.position, enemytransform.position);
         if (dist_enemy_player < enemyAI.sensingRange)

@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ScrollWeapon",
+                    "type": "Value",
+                    "id": "565999a9-9853-4180-aa03-b6865ee6f042",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -271,6 +280,17 @@
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "01b7f871-63e3-4476-b16f-2e14c53b3ab1",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ScrollWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -369,9 +389,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
+                    "name": "pause",
                     "type": "Button",
-                    "id": "213620b4-747d-4b14-afb8-7a0a3d2e9e0b",
+                    "id": "3bf7e9cd-5015-4b5f-96fd-8c1c4a4a4cbd",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -799,12 +819,12 @@
                 },
                 {
                     "name": "",
-                    "id": "9064b286-b1d8-4d05-9b71-5f70e2a7c35e",
+                    "id": "9e98412b-e182-4f21-abb2-965b6fde3f8c",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Pause",
+                    "action": "pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

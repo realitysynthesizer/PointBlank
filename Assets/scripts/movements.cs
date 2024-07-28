@@ -1,6 +1,8 @@
 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 
@@ -21,25 +23,21 @@ public class movements : MonoBehaviour
     public Vector3 dist_cam_player;
     public Vector3 mousepos;
     public gamemanager gamemanager;
- 
+    private Vector2 scrollInput;
+    public WeaponInventory weaponInventory;
+
     private void Awake()
     {
         
         inputasset = new TemporalOdyssey();
-        inputasset.Player.Enable();
        
         screenspacecentre = new Vector3(Screen.width / 2, Screen.height / 2, 0);
 
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        gamemanager = GameObject.Find("gamemanager").GetComponent<gamemanager>();
-        cam = Camera.main;
-        animator = GetComponent<Animator>();
-        speedincrement = 1.5f;
-        playershooting = GetComponent<PlayerShooting>();
 
+    void OnEnable()
+    {
+        inputasset.Player.Enable();
         inputasset.Player.sprint.started += ctx =>
 
         {
@@ -55,11 +53,29 @@ public class movements : MonoBehaviour
             animator.SetFloat("movementspeedmultiplier", 1);
         };
 
+        inputasset.Player.ScrollWeapon.performed += OnScrollWeapon;
+
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        gamemanager = GameObject.Find("gamemanager").GetComponent<gamemanager>();
+        cam = Camera.main;
+        animator = GetComponent<Animator>();
+        speedincrement = 1.5f;
+        playershooting = GetComponent<PlayerShooting>();
+        weaponInventory = GetComponent<WeaponInventory>();
+        
+
 
     }
 
     private void Update()
     {
+        if (gameObject==null)
+        {
+            return;
+        }
         
         Vector2 move = inputasset.Player.Move.ReadValue<Vector2>();
         if (move.magnitude != 0)
@@ -94,7 +110,7 @@ public class movements : MonoBehaviour
             animator.SetInteger("state", 0);
         }
 
-        if (playershooting.currentAmmo > 0)
+        if (playershooting.currentWeapon.currentAmmo > 0)
         {
             
 
@@ -124,18 +140,31 @@ public class movements : MonoBehaviour
             }
         }
 
-        
-        
+      
+
+    
 
     }
 
     private void OnDisable()
     {
         inputasset.Player.Disable();
+        UnityEngine.Cursor.visible = true;     
 
     }
 
-
+    void OnScrollWeapon(InputAction.CallbackContext context)
+    {
+        scrollInput = context.ReadValue<Vector2>();
+        if (scrollInput.y > 0)
+        {
+            weaponInventory.SelectNextWeapon();
+        }
+        else if (scrollInput.y < 0)
+        {
+            weaponInventory.SelectPreviousWeapon();
+        }
+    }
 
 
 }

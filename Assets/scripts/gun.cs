@@ -20,40 +20,40 @@ public class gun : MonoBehaviour
     public AudioSource source;
     public float firedelay = 0.1f;
     public float canfire;
-    public TemporalOdyssey inputasset;
+    public GameObject shootpoint;
     public gamemanager gamemanager;
     public GameObject bloodimpact;
     public GameObject hitimpact;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
+       
         tip = transform.Find("tip").gameObject;
+        Debug.Log(tip);
         player = GameObject.Find("player");
         cam = Camera.main;
         source = GetComponent<AudioSource>();
         canfire = Time.time;
-        
-        inputasset = new TemporalOdyssey();
-        inputasset.Player.Enable();
+        shootpoint = GameObject.Find("shootpoint");
+ 
         gamemanager = GameObject.Find("gamemanager").GetComponent<gamemanager>();
-        
-
-
-
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (player == null)
+        {
+            return;
+        }
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane tipplane = new Plane(Vector3.up, tip.transform.position);
+        Plane tipplane = new Plane(Vector3.up, shootpoint.transform.position);
         tipplane.Raycast(ray, out float distance);
         Vector3 hitpoint = ray.GetPoint(distance);   
-        gamemanager.aimdirection = (hitpoint - tip.transform.position);
+        gamemanager.aimdirection = (hitpoint - shootpoint.transform.position);
         Quaternion temprotation = Quaternion.LookRotation(gamemanager.aimdirection);
         Vector3 euler = temprotation.eulerAngles;
         euler.y += 40; //rotation offset for animation correction
@@ -69,25 +69,15 @@ public class gun : MonoBehaviour
       
             lastrotation = player.transform.rotation;
         }
-        
-     
+
         crosshairrect.position = cam.WorldToScreenPoint(hitpoint);
-        
-
-        /*if (inputasset.Player.Fire.inProgress)
-        {
-            if (Time.time > canfire)
-            {
-                shoot();
-                canfire = Time.time + firedelay;
-            }
-        }*/
-
+   
     }
 
     public void shoot()
     {
-        Instantiate(bullet, tip.transform.position, tip.transform.rotation);
+        //Instantiate(bullet, tip.transform.position, tip.transform.rotation);
+        //Debug.Log("Shot fired!");
         source.Play();
         Instantiate(muzzleflash, tip.transform);
         if (Physics.Raycast(tip.transform.position, tip.transform.forward, out RaycastHit hit, 100f))
@@ -97,15 +87,12 @@ public class gun : MonoBehaviour
             {
                 Instantiate(bloodimpact, hit.point, Quaternion.LookRotation(hit.normal));
 
-
             }
             else
             {
                 GameObject impactinstance = Instantiate(hitimpact, hit.point, Quaternion.LookRotation(hit.normal));
                 Destroy(impactinstance, 10f);
             }
-
-            
 
             Health health = hit.collider.gameObject.GetComponent<Health>();
             if (health != null)
@@ -119,6 +106,8 @@ public class gun : MonoBehaviour
     }
 
     
+
+
 
 
 

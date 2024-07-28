@@ -481,10 +481,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.21662971
+  m_Radius: 0.23200464
   m_Height: 1.8125005
   m_Direction: 1
-  m_Center: {x: 0.0013516682, y: 0.90563226, z: 0.018292194}
+  m_Center: {x: -0.00029530856, y: 0.90563226, z: 0.018292194}
 --- !u!114 &9153801341152191211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -997,6 +997,9 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
