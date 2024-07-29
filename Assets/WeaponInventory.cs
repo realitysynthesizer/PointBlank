@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.UI;
 
 public class WeaponInventory : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class WeaponInventory : MonoBehaviour
     public Weapon CurrentWeapon { get; private set; }
     public List<GameObject> weaponObjects = new List<GameObject>(); // List of weapon GameObjects
     public List<GameObject> tipObjects = new List<GameObject>(); // List of tip GameObjects
+    public List<RawImage> weaponImages = new List<RawImage>(); // List of weapon UI Images
+    public RawImage activeWeaponImage; // UI Image to show active weapon
+
     public Animator animator; // Animator component for weapon switching animations
     public GameObject CurrentTip { get; private set; }
 
@@ -23,6 +27,8 @@ public class WeaponInventory : MonoBehaviour
             CurrentWeapon = weapons[0];
             CurrentTip = tipObjects[0];
             UpdateWeaponObjects();
+            UpdateWeaponUI();
+
 
         }
 
@@ -42,7 +48,14 @@ public class WeaponInventory : MonoBehaviour
             weaponObjects[i].SetActive(i == currentWeaponIndex);
         }
     }
-
+    void UpdateWeaponUI()
+    {
+        for (int i = 0; i < weaponImages.Count; i++)
+        {
+            weaponImages[i].color = (i == currentWeaponIndex) ? Color.white : Color.gray; // Highlight the current weapon
+        }
+        activeWeaponImage.texture = weaponImages[currentWeaponIndex].texture; // Update active weapon RawImage
+    }
     public void SelectWeapon(int index)
     {
         if (index >= 0 && index < weapons.Count)
@@ -71,12 +84,13 @@ public class WeaponInventory : MonoBehaviour
     IEnumerator SwitchWeapon()
     {
         animator.SetTrigger("Holster");
-
+        UpdateWeaponObjects();
+        UpdateWeaponUI();
         yield return new WaitForSeconds(0.5f);
 
-        UpdateWeaponObjects();
-
         
+
+
 
         Debug.Log("Switched to weapon: " + CurrentWeapon.weaponName);
     }
